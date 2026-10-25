@@ -1,7 +1,7 @@
 name: mesaplay
 description: Jogos de tabuleiro para jogar no mesmo celular ou na rede local.
 publish_to: "none"
-version: 0.1.0+1
+version: 0.2.0+2
 
 environment:
   sdk: ^3.9.0

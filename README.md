@@ -2,7 +2,16 @@
 
 Aplicativo mobile de jogos de tabuleiro para jogar no mesmo celular ou com amigos conectados à mesma rede Wi-Fi.
 
-> Projeto em desenvolvimento. A primeira etapa entrega a fundação Flutter, a identidade visual e a automação de qualidade.
+> Projeto em desenvolvimento. A versão atual já permite jogar jogo da velha com dois jogadores no mesmo celular.
+
+## Recursos disponíveis
+
+- Cadastro rápido do nome de dois jogadores.
+- Motor independente do jogo da velha.
+- Validação de jogadas, vitória e empate.
+- Placar mantido durante a disputa.
+- Revanche alternando o jogador inicial.
+- Interface responsiva para Android e iOS.
 
 ## Proposta
 
@@ -16,7 +25,7 @@ O MesaPlay reunirá jogos rápidos como jogo da velha, Lig 4, Reversi e damas. C
 - Flutter e Dart
 - Material 3
 - WebSocket e descoberta na rede local nas próximas etapas
-- Testes de widgets e regras de negócio
+- Testes unitários e de widgets
 - GitHub Actions
 
 ## Executar localmente
