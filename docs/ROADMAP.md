@@ -1,13 +1,13 @@
 # Roadmap
 
-## Etapa 1 — Fundação e identidade visual
+## Etapa 1 — Fundação e identidade visual ✅
 
 - Projeto Flutter para Android e iOS.
 - Tema visual e tela inicial responsiva.
 - Teste de interface e integração contínua.
 - Arquitetura e etapas documentadas.
 
-## Etapa 2 — Jogadores e jogo da velha
+## Etapa 2 — Jogadores e jogo da velha ✅
 
 - Cadastro rápido dos nomes dos jogadores.
 - Motor do jogo da velha com testes unitários.

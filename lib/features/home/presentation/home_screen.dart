@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_theme.dart';
+import '../../tic_tac_toe/presentation/tic_tac_toe_setup_screen.dart';
 import '../domain/game_preview.dart';
 import 'widgets/game_card.dart';
 
@@ -64,8 +65,12 @@ class HomeScreen extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         itemCount: games.length,
                         separatorBuilder: (_, _) => const SizedBox(width: 14),
-                        itemBuilder: (context, index) =>
-                            GameCard(game: games[index]),
+                        itemBuilder: (context, index) => GameCard(
+                          game: games[index],
+                          onTap: () => index == 0
+                              ? _openTicTacToe(context)
+                              : _showComingSoon(context, games[index].name),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 34),
@@ -77,6 +82,18 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  static void _openTicTacToe(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (_) => const TicTacToeSetupScreen()),
+    );
+  }
+
+  static void _showComingSoon(BuildContext context, String game) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('$game chegará em uma próxima etapa.')),
     );
   }
 }
@@ -195,7 +212,7 @@ class _LocalButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: FilledButton.icon(
-        onPressed: () {},
+        onPressed: () => HomeScreen._openTicTacToe(context),
         icon: const Icon(Icons.smartphone_rounded),
         label: const Text('Mesmo celular'),
       ),

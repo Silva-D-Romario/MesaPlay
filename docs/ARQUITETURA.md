@@ -16,7 +16,7 @@ lib/
 └── features/
     ├── home/            # Catálogo de jogos
     ├── players/         # Jogadores e placar local
-    ├── tic_tac_toe/     # Regras e interface do jogo da velha
+    ├── tic_tac_toe/     # Motor testado e interface da partida local
     └── local_network/   # Salas, descoberta e WebSocket na rede local
 ```
 
