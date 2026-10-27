@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_theme.dart';
 import '../../checkers/presentation/checkers_setup_screen.dart';
+import '../../connect_four/presentation/connect_four_setup_screen.dart';
 import '../../hangman/presentation/hangman_setup_screen.dart';
 import '../../tic_tac_toe/presentation/tic_tac_toe_setup_screen.dart';
 import '../domain/game_preview.dart';
@@ -41,7 +42,7 @@ class HomeScreen extends StatelessWidget {
       description: 'Estratégia simples, disputa intensa.',
       icon: Icons.view_column_rounded,
       accent: AppColors.coral,
-      status: 'EM BREVE',
+      status: 'JOGAR',
     ),
   ];
 
@@ -86,6 +87,8 @@ class HomeScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 34),
                     const _LanPreview(),
+                    const SizedBox(height: 28),
+                    const _Credit(),
                   ],
                 ),
               ),
@@ -97,23 +100,13 @@ class HomeScreen extends StatelessWidget {
   }
 
   static void _openGame(BuildContext context, GamePreview game) {
-    final Widget? screen = switch (game.kind) {
+    final Widget screen = switch (game.kind) {
       GameKind.ticTacToe => const TicTacToeSetupScreen(),
       GameKind.checkers => const CheckersSetupScreen(),
       GameKind.hangman => const HangmanSetupScreen(),
-      GameKind.connectFour => null,
+      GameKind.connectFour => const ConnectFourSetupScreen(),
     };
-    if (screen == null) {
-      _showComingSoon(context, game.name);
-      return;
-    }
     Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => screen));
-  }
-
-  static void _showComingSoon(BuildContext context, String game) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('$game chegará em uma próxima etapa.')),
-    );
   }
 }
 
@@ -124,22 +117,14 @@ class _TopBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          width: 46,
-          height: 46,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [AppColors.primary, AppColors.cyan],
-            ),
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: const Text(
-            'AP',
-            style: TextStyle(
-              color: AppColors.background,
-              fontWeight: FontWeight.w900,
-            ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Image.asset(
+            'assets/branding/asobiplay-logo.png',
+            key: const Key('asobiplay-logo'),
+            width: 46,
+            height: 46,
+            fit: BoxFit.cover,
           ),
         ),
         const SizedBox(width: 12),
@@ -306,6 +291,29 @@ class _LanPreview extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _Credit extends StatelessWidget {
+  const _Credit();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(Icons.code_rounded, color: AppColors.primary, size: 18),
+        SizedBox(width: 8),
+        Text(
+          'Desenvolvido por Romário Silva',
+          key: Key('developer-credit'),
+          style: TextStyle(
+            color: AppColors.textSecondary,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ],
     );
   }
 }

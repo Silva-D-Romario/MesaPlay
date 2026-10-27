@@ -12,6 +12,7 @@ class CheckersScreen extends StatefulWidget {
     required this.playerTwo,
     required this.boardColors,
     required this.pieceColors,
+    required this.rules,
     super.key,
   });
 
@@ -19,6 +20,7 @@ class CheckersScreen extends StatefulWidget {
   final String playerTwo;
   final CheckersBoardColors boardColors;
   final CheckersPieceColors pieceColors;
+  final CheckersRules rules;
 
   @override
   State<CheckersScreen> createState() => _CheckersScreenState();
@@ -36,7 +38,7 @@ class _CheckersScreenState extends State<CheckersScreen> {
   @override
   void initState() {
     super.initState();
-    _game = CheckersGame();
+    _game = CheckersGame(rules: widget.rules);
   }
 
   String _nameFor(CheckersPlayer player) {
@@ -80,7 +82,7 @@ class _CheckersScreenState extends State<CheckersScreen> {
       _starter = _starter == CheckersPlayer.one
           ? CheckersPlayer.two
           : CheckersPlayer.one;
-      _game = CheckersGame(firstPlayer: _starter);
+      _game = CheckersGame(firstPlayer: _starter, rules: widget.rules);
       _selected = null;
       _winnerCounted = false;
       _round++;
@@ -93,7 +95,7 @@ class _CheckersScreenState extends State<CheckersScreen> {
       _scoreTwo = 0;
       _round = 1;
       _starter = CheckersPlayer.one;
-      _game = CheckersGame();
+      _game = CheckersGame(rules: widget.rules);
       _selected = null;
       _winnerCounted = false;
     });
@@ -139,15 +141,13 @@ class _CheckersScreenState extends State<CheckersScreen> {
                       active: _game.isFinished ? null : _game.currentPlayer,
                     ),
                     const SizedBox(height: 16),
-                    Text(
-                      'Rodada $_round  ·  $_status',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: _game.winner == null
-                            ? _colorFor(_game.currentPlayer)
-                            : _colorFor(_game.winner!),
-                        fontWeight: FontWeight.w800,
-                      ),
+                    _TurnBanner(
+                      round: _round,
+                      status: _status,
+                      pieceColor: _game.winner == null
+                          ? _colorFor(_game.currentPlayer)
+                          : _colorFor(_game.winner!),
+                      finished: _game.isFinished,
                     ),
                     const SizedBox(height: 16),
                     _CheckersBoard(
@@ -166,7 +166,7 @@ class _CheckersScreenState extends State<CheckersScreen> {
                         onNextRound: _nextRound,
                       )
                     else
-                      const _RulesTip(),
+                      _RulesTip(rules: widget.rules),
                   ],
                 ),
               ),
@@ -293,13 +293,34 @@ class _PlayerCard extends StatelessWidget {
       duration: const Duration(milliseconds: 180),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: active ? color.withValues(alpha: 0.14) : AppColors.surface,
+        color: active
+            ? AppColors.primary.withValues(alpha: 0.14)
+            : AppColors.surface,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: active ? color : AppColors.surfaceLight),
+        border: Border.all(
+          color: active ? AppColors.primary : AppColors.surfaceLight,
+          width: active ? 2 : 1,
+        ),
+        boxShadow: active
+            ? [
+                BoxShadow(
+                  color: AppColors.primary.withValues(alpha: 0.22),
+                  blurRadius: 14,
+                ),
+              ]
+            : null,
       ),
       child: Row(
         children: [
-          CircleAvatar(radius: 9, backgroundColor: color),
+          Container(
+            width: 20,
+            height: 20,
+            decoration: BoxDecoration(
+              color: color,
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white70),
+            ),
+          ),
           const SizedBox(width: 9),
           Expanded(
             child: Column(
@@ -315,6 +336,16 @@ class _PlayerCard extends StatelessWidget {
                   ),
                 ),
                 Text('$score vitória${score == 1 ? '' : 's'}'),
+                if (active)
+                  const Text(
+                    'SUA VEZ',
+                    key: Key('active-player-label'),
+                    style: TextStyle(
+                      color: AppColors.primary,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
               ],
             ),
           ),
@@ -444,13 +475,81 @@ class _CheckersBoard extends StatelessWidget {
 }
 
 class _RulesTip extends StatelessWidget {
-  const _RulesTip();
+  const _RulesTip({required this.rules});
+
+  final CheckersRules rules;
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'Selecione uma peça e depois uma casa destacada. Capturas são obrigatórias e podem continuar na mesma jogada.',
+    final captureRule = rules.mandatoryCapture
+        ? 'captura obrigatória'
+        : 'captura opcional';
+    final directionRule = rules.menCanCaptureBackward
+        ? 'peões capturam para frente e para trás'
+        : 'peões capturam somente para frente';
+    return Text(
+      'Selecione uma peça e uma casa destacada · $captureRule · $directionRule.',
       textAlign: TextAlign.center,
+    );
+  }
+}
+
+class _TurnBanner extends StatelessWidget {
+  const _TurnBanner({
+    required this.round,
+    required this.status,
+    required this.pieceColor,
+    required this.finished,
+  });
+
+  final int round;
+  final String status;
+  final Color pieceColor;
+  final bool finished;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      key: const Key('checkers-turn-banner'),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.65)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 18,
+            height: 18,
+            decoration: BoxDecoration(
+              color: pieceColor,
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white70),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Flexible(
+            child: Text(
+              'Rodada $round  ·  $status',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: finished ? AppColors.primary : AppColors.textPrimary,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          ),
+          if (!finished) ...[
+            const SizedBox(width: 8),
+            const Icon(
+              Icons.play_arrow_rounded,
+              color: AppColors.primary,
+              size: 20,
+            ),
+          ],
+        ],
+      ),
     );
   }
 }

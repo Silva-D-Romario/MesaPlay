@@ -20,7 +20,9 @@ void main() {
     );
     await tester.enterText(find.byKey(const Key('checkers-player-two')), 'Bia');
     await tester.tap(find.byKey(const Key('board-theme-1')));
-    await tester.tap(find.byKey(const Key('piece-theme-2')));
+    await tester.tap(find.byKey(const Key('player-1-color-4')));
+    await tester.tap(find.byKey(const Key('player-2-color-2')));
+    await tester.tap(find.byKey(const Key('backward-capture')));
     final start = find.byKey(const Key('start-checkers'));
     await tester.ensureVisible(start);
     await tester.pumpAndSettle();
@@ -31,6 +33,8 @@ void main() {
     expect(find.text('Romario'), findsOneWidget);
     expect(find.text('Bia'), findsOneWidget);
     expect(find.textContaining('Vez de Romario'), findsOneWidget);
+    expect(find.byKey(const Key('checkers-turn-banner')), findsOneWidget);
+    expect(find.text('SUA VEZ'), findsOneWidget);
 
     await tester.tap(find.byKey(const Key('checkers-cell-40')));
     await tester.pump();

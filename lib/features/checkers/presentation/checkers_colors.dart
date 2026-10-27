@@ -13,15 +13,17 @@ class CheckersBoardColors {
 }
 
 class CheckersPieceColors {
-  const CheckersPieceColors({
-    required this.name,
-    required this.playerOne,
-    required this.playerTwo,
-  });
+  const CheckersPieceColors({required this.playerOne, required this.playerTwo});
 
-  final String name;
   final Color playerOne;
   final Color playerTwo;
+}
+
+class CheckersPieceColor {
+  const CheckersPieceColor({required this.name, required this.color});
+
+  final String name;
+  final Color color;
 }
 
 const checkersBoardOptions = [
@@ -42,20 +44,10 @@ const checkersBoardOptions = [
   ),
 ];
 
-const checkersPieceOptions = [
-  CheckersPieceColors(
-    name: 'Rubi e ônix',
-    playerOne: Color(0xFFFF5D6C),
-    playerTwo: Color(0xFF161A24),
-  ),
-  CheckersPieceColors(
-    name: 'Azul e ouro',
-    playerOne: Color(0xFF32C5FF),
-    playerTwo: Color(0xFFFFC857),
-  ),
-  CheckersPieceColors(
-    name: 'Limão e violeta',
-    playerOne: Color(0xFFB8FF55),
-    playerTwo: Color(0xFF8E7CFF),
-  ),
+const checkersPieceColorOptions = [
+  CheckersPieceColor(name: 'Vermelho', color: Color(0xFFFF5D6C)),
+  CheckersPieceColor(name: 'Prata', color: Color(0xFFC9D1D9)),
+  CheckersPieceColor(name: 'Preto', color: Color(0xFF11151D)),
+  CheckersPieceColor(name: 'Azul', color: Color(0xFF32C5FF)),
+  CheckersPieceColor(name: 'Amarelo', color: Color(0xFFFFD166)),
 ];

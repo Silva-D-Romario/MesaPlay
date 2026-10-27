@@ -6,6 +6,7 @@ void main() {
     test('revela acertos e contabiliza erros', () {
       final game = HangmanGame(secretWord: 'CASA');
 
+      expect(game.maxErrors, 7);
       expect(game.guess('A'), isTrue);
       expect(game.maskedWord, '_ A _ A');
       expect(game.guess('X'), isTrue);
@@ -52,6 +53,19 @@ void main() {
       expect(game.isLost, isTrue);
       expect(game.isFinished, isTrue);
       expect(game.guess('S'), isFalse);
+    });
+
+    test('oferece uma última tentativa depois do boneco completo', () {
+      final game = HangmanGame(secretWord: 'SOL');
+
+      for (final letter in ['A', 'B', 'C', 'D', 'E', 'F']) {
+        game.guess(letter);
+      }
+
+      expect(game.errors, 6);
+      expect(game.isFinished, isFalse);
+      expect(game.guess('G'), isTrue);
+      expect(game.isLost, isTrue);
     });
 
     test('rejeita palavra sem letras', () {

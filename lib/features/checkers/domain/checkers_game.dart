@@ -2,6 +2,16 @@ import 'dart:collection';
 
 enum CheckersPlayer { one, two }
 
+class CheckersRules {
+  const CheckersRules({
+    this.mandatoryCapture = true,
+    this.menCanCaptureBackward = true,
+  });
+
+  final bool mandatoryCapture;
+  final bool menCanCaptureBackward;
+}
+
 class CheckersPiece {
   const CheckersPiece({required this.player, this.isKing = false});
 
@@ -25,13 +35,16 @@ class CheckersMove {
 }
 
 class CheckersGame {
-  CheckersGame({CheckersPlayer firstPlayer = CheckersPlayer.one})
-    : _board = _initialBoard(),
-      _currentPlayer = firstPlayer;
+  CheckersGame({
+    CheckersPlayer firstPlayer = CheckersPlayer.one,
+    this.rules = const CheckersRules(),
+  }) : _board = _initialBoard(),
+       _currentPlayer = firstPlayer;
 
   CheckersGame.custom({
     required List<CheckersPiece?> board,
     CheckersPlayer firstPlayer = CheckersPlayer.one,
+    this.rules = const CheckersRules(),
   }) : assert(board.length == 64),
        _board = List.of(board),
        _currentPlayer = firstPlayer;
@@ -39,6 +52,7 @@ class CheckersGame {
   static const _diagonals = [(-1, -1), (-1, 1), (1, -1), (1, 1)];
 
   final List<CheckersPiece?> _board;
+  final CheckersRules rules;
   CheckersPlayer _currentPlayer;
   CheckersPlayer? _winner;
   int? _forcedPiece;
@@ -63,10 +77,10 @@ class CheckersGame {
     if (_forcedPiece == index) return captures;
 
     final allCaptures = _allCaptureMoves(_currentPlayer);
-    if (allCaptures.isNotEmpty) {
+    if (rules.mandatoryCapture && allCaptures.isNotEmpty) {
       return captures;
     }
-    return _simpleMovesFor(index, piece);
+    return [...captures, ..._simpleMovesFor(index, piece)];
   }
 
   bool move(int from, int to) {
@@ -94,7 +108,9 @@ class CheckersGame {
     }
     _board[to] = piece;
 
-    if (selected.isCapture && _captureMovesFor(to, piece).isNotEmpty) {
+    if (selected.isCapture &&
+        rules.mandatoryCapture &&
+        _captureMovesFor(to, piece).isNotEmpty) {
       _forcedPiece = to;
       return true;
     }
@@ -178,7 +194,11 @@ class CheckersGame {
     final moves = <CheckersMove>[];
     final row = index ~/ 8;
     final column = index % 8;
-    for (final (rowDelta, columnDelta) in _diagonals) {
+    final direction = piece.player == CheckersPlayer.one ? -1 : 1;
+    final diagonals = rules.menCanCaptureBackward
+        ? _diagonals
+        : [(direction, -1), (direction, 1)];
+    for (final (rowDelta, columnDelta) in diagonals) {
       final capturedRow = row + rowDelta;
       final capturedColumn = column + columnDelta;
       final targetRow = row + rowDelta * 2;

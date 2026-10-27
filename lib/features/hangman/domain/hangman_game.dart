@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 class HangmanGame {
-  HangmanGame({required String secretWord, this.maxErrors = 6})
+  HangmanGame({required String secretWord, this.maxErrors = 7})
     : assert(maxErrors > 0),
       secretWord = secretWord.trim() {
     if (this.secretWord.isEmpty ||

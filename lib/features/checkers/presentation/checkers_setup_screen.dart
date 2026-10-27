@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_theme.dart';
+import '../domain/checkers_game.dart';
 import 'checkers_colors.dart';
 import 'checkers_screen.dart';
 
@@ -16,7 +17,11 @@ class _CheckersSetupScreenState extends State<CheckersSetupScreen> {
   final _playerOneController = TextEditingController();
   final _playerTwoController = TextEditingController();
   var _boardIndex = 0;
-  var _pieceIndex = 0;
+  var _playerOneColorIndex = 0;
+  var _playerTwoColorIndex = 3;
+  var _mandatoryCapture = true;
+  var _menCanCaptureBackward = true;
+  String? _colorError;
 
   @override
   void dispose() {
@@ -33,13 +38,28 @@ class _CheckersSetupScreenState extends State<CheckersSetupScreen> {
 
   void _start() {
     if (!_formKey.currentState!.validate()) return;
+    if (_playerOneColorIndex == _playerTwoColorIndex) {
+      setState(
+        () => _colorError = 'Escolha cores diferentes para os jogadores.',
+      );
+      return;
+    }
+    final playerOneColor = checkersPieceColorOptions[_playerOneColorIndex];
+    final playerTwoColor = checkersPieceColorOptions[_playerTwoColorIndex];
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => CheckersScreen(
           playerOne: _playerOneController.text.trim(),
           playerTwo: _playerTwoController.text.trim(),
           boardColors: checkersBoardOptions[_boardIndex],
-          pieceColors: checkersPieceOptions[_pieceIndex],
+          pieceColors: CheckersPieceColors(
+            playerOne: playerOneColor.color,
+            playerTwo: playerTwoColor.color,
+          ),
+          rules: CheckersRules(
+            mandatoryCapture: _mandatoryCapture,
+            menCanCaptureBackward: _menCanCaptureBackward,
+          ),
         ),
       ),
     );
@@ -126,26 +146,61 @@ class _CheckersSetupScreenState extends State<CheckersSetupScreen> {
                         }),
                       ),
                       const SizedBox(height: 24),
-                      const _SectionTitle('Cor das peças'),
+                      const _SectionTitle('Peças do Jogador 1'),
                       const SizedBox(height: 12),
-                      Wrap(
-                        spacing: 10,
-                        runSpacing: 10,
-                        children: List.generate(checkersPieceOptions.length, (
-                          index,
-                        ) {
-                          final colors = checkersPieceOptions[index];
-                          return ChoiceChip(
-                            key: Key('piece-theme-$index'),
-                            selected: _pieceIndex == index,
-                            onSelected: (_) =>
-                                setState(() => _pieceIndex = index),
-                            avatar: _PieceSwatch(colors: colors),
-                            label: Text(colors.name),
-                          );
+                      _PieceColorPicker(
+                        player: 1,
+                        selectedIndex: _playerOneColorIndex,
+                        onSelected: (index) => setState(() {
+                          _playerOneColorIndex = index;
+                          _colorError = null;
                         }),
                       ),
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 20),
+                      const _SectionTitle('Peças do Jogador 2'),
+                      const SizedBox(height: 12),
+                      _PieceColorPicker(
+                        player: 2,
+                        selectedIndex: _playerTwoColorIndex,
+                        onSelected: (index) => setState(() {
+                          _playerTwoColorIndex = index;
+                          _colorError = null;
+                        }),
+                      ),
+                      if (_colorError != null) ...[
+                        const SizedBox(height: 10),
+                        Text(
+                          _colorError!,
+                          key: const Key('checkers-color-error'),
+                          style: const TextStyle(color: AppColors.coral),
+                        ),
+                      ],
+                      const SizedBox(height: 26),
+                      const _SectionTitle('Regras da partida'),
+                      const SizedBox(height: 8),
+                      SwitchListTile.adaptive(
+                        key: const Key('mandatory-capture'),
+                        contentPadding: EdgeInsets.zero,
+                        title: const Text('Captura obrigatória'),
+                        subtitle: const Text(
+                          'Se houver uma captura, ela deve ser realizada.',
+                        ),
+                        value: _mandatoryCapture,
+                        onChanged: (value) =>
+                            setState(() => _mandatoryCapture = value),
+                      ),
+                      SwitchListTile.adaptive(
+                        key: const Key('backward-capture'),
+                        contentPadding: EdgeInsets.zero,
+                        title: const Text('Peão pode capturar para trás'),
+                        subtitle: const Text(
+                          'A dama continua podendo capturar em todas as direções.',
+                        ),
+                        value: _menCanCaptureBackward,
+                        onChanged: (value) =>
+                            setState(() => _menCanCaptureBackward = value),
+                      ),
+                      const SizedBox(height: 22),
                       FilledButton.icon(
                         key: const Key('start-checkers'),
                         onPressed: _start,
@@ -245,28 +300,40 @@ class _BoardSwatch extends StatelessWidget {
   }
 }
 
-class _PieceSwatch extends StatelessWidget {
-  const _PieceSwatch({required this.colors});
+class _PieceColorPicker extends StatelessWidget {
+  const _PieceColorPicker({
+    required this.player,
+    required this.selectedIndex,
+    required this.onSelected,
+  });
 
-  final CheckersPieceColors colors;
+  final int player;
+  final int selectedIndex;
+  final ValueChanged<int> onSelected;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 20,
-      height: 12,
-      child: Stack(
-        children: [
-          Positioned(
-            left: 0,
-            child: CircleAvatar(radius: 6, backgroundColor: colors.playerOne),
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: List.generate(checkersPieceColorOptions.length, (index) {
+        final option = checkersPieceColorOptions[index];
+        return ChoiceChip(
+          key: Key('player-$player-color-$index'),
+          selected: selectedIndex == index,
+          onSelected: (_) => onSelected(index),
+          avatar: Container(
+            width: 18,
+            height: 18,
+            decoration: BoxDecoration(
+              color: option.color,
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white54),
+            ),
           ),
-          Positioned(
-            right: 0,
-            child: CircleAvatar(radius: 6, backgroundColor: colors.playerTwo),
-          ),
-        ],
-      ),
+          label: Text(option.name),
+        );
+      }),
     );
   }
 }
