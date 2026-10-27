@@ -54,6 +54,11 @@ O código é organizado por funcionalidades. As regras de cada jogo são separad
 
 Consulte a [arquitetura](docs/ARQUITETURA.md) e o [roadmap](docs/ROADMAP.md) para acompanhar as próximas entregas.
 
+## Versões
+
+- Consulte o [histórico de mudanças](CHANGELOG.md).
+- Baixe os APKs publicados na página de [releases do GitHub](https://github.com/Silva-D-Romario/asobiplay/releases).
+
 ## Fluxo de desenvolvimento
 
 - `main`: versão estável.
