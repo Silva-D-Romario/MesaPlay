@@ -1,7 +1,7 @@
 name: asobiplay
 description: Jogos de tabuleiro para jogar no mesmo celular ou na rede local.
 publish_to: "none"
-version: 0.3.0+3
+version: 0.4.0+4
 
 environment:
   sdk: ^3.9.0
@@ -18,3 +18,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/branding/asobiplay-logo.png

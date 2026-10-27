@@ -16,10 +16,15 @@ void main() {
     expect(find.text('Forca'), findsOneWidget);
     expect(find.text('Mesmo celular'), findsOneWidget);
     expect(find.text('Sala Wi-Fi'), findsOneWidget);
+    expect(find.byKey(const Key('asobiplay-logo')), findsOneWidget);
 
     await tester.drag(find.byType(ListView), const Offset(-600, 0));
     await tester.pumpAndSettle();
 
     expect(find.text('Lig 4'), findsOneWidget);
+
+    await tester.drag(find.byType(CustomScrollView), const Offset(0, -900));
+    await tester.pumpAndSettle();
+    expect(find.text('Desenvolvido por Romário Silva'), findsOneWidget);
   });
 }
