@@ -2,17 +2,19 @@
 
 Aplicativo mobile de jogos de tabuleiro para jogar no mesmo celular ou com amigos conectados à mesma rede Wi-Fi.
 
-> Projeto em desenvolvimento. A versão atual permite jogar Jogo da Velha, Damas e Forca com dois jogadores no mesmo celular.
+> Projeto em desenvolvimento. A versão atual permite jogar Jogo da Velha, Damas, Forca e Lig 4 com dois jogadores no mesmo celular.
 
 ## Recursos disponíveis
 
 - Cadastro rápido dos nomes dos jogadores em cada jogo.
 - Jogo da Velha com validação de jogadas, vitória, empate e revanche.
-- Damas com capturas obrigatórias, múltiplas capturas, promoção e damas voadoras.
-- Personalização das cores do tabuleiro e das peças de Damas.
-- Forca com palavra secreta protegida, dica opcional e desenho progressivo do boneco.
+- Damas com captura obrigatória opcional, captura para trás configurável, promoção e damas voadoras.
+- Cinco cores individuais para as peças de cada jogador e três temas de tabuleiro.
+- Forca com palavra secreta protegida, dica opcional e sete estágios no desenho.
+- Lig 4 com gravidade, sequências horizontais, verticais e diagonais.
 - Placar mantido durante as partidas e alternância de papéis nas revanches.
 - Interface responsiva para Android e iOS.
+- Identidade visual própria e ícones para Android e iOS.
 
 ## Proposta
 

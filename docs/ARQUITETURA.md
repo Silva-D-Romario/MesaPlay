@@ -18,6 +18,7 @@ lib/
     ├── tic_tac_toe/     # Jogo da Velha: domínio e interface local
     ├── checkers/        # Damas: regras, temas e interface local
     ├── hangman/         # Forca: palavra, desenho e interface local
+    ├── connect_four/    # Lig 4: motor, gravidade e interface local
     └── local_network/   # Salas, descoberta e WebSocket na rede local
 ```
 

@@ -16,8 +16,8 @@
 ## Etapa 3 — Damas e Forca ✅
 
 - Damas com regras, capturas, promoção e testes automatizados.
-- Escolha das cores do tabuleiro e das peças.
-- Forca com palavra secreta, dica opcional e desenho progressivo.
+- Escolha individual das cores das peças, temas de tabuleiro e regras configuráveis.
+- Forca com palavra secreta, dica opcional, sétima tentativa e desenho progressivo.
 - Nomes, placar e revanches para os dois jogos.
 
 ## Etapa 4 — Salas na rede Wi-Fi
@@ -27,11 +27,11 @@
 - Entrada por código e descoberta na rede local.
 - Reconexão e validação das jogadas pelo anfitrião.
 
-## Etapa 5 — Lig 4
+## Etapa 5 — Lig 4 ✅
 
 - Motor independente e testado.
-- Partidas locais e pela rede Wi-Fi.
-- Histórico de vitórias por jogador.
+- Partidas locais com nomes, indicador de turno e revanche.
+- Placar de vitórias durante a sessão.
 
 ## Etapa 6 — Reversi
 
