@@ -183,7 +183,7 @@ class _CheckersSetupScreenState extends State<CheckersSetupScreen> {
                         contentPadding: EdgeInsets.zero,
                         title: const Text('Captura obrigatória'),
                         subtitle: const Text(
-                          'Se houver uma captura, ela deve ser realizada.',
+                          'Define se a primeira captura é obrigatória. Uma sequência iniciada sempre deve continuar.',
                         ),
                         value: _mandatoryCapture,
                         onChanged: (value) =>

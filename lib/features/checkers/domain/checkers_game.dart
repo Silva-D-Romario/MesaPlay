@@ -108,9 +108,7 @@ class CheckersGame {
     }
     _board[to] = piece;
 
-    if (selected.isCapture &&
-        rules.mandatoryCapture &&
-        _captureMovesFor(to, piece).isNotEmpty) {
+    if (selected.isCapture && _captureMovesFor(to, piece).isNotEmpty) {
       _forcedPiece = to;
       return true;
     }
