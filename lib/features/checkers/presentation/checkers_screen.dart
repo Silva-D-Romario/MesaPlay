@@ -483,7 +483,7 @@ class _RulesTip extends StatelessWidget {
   Widget build(BuildContext context) {
     final captureRule = rules.mandatoryCapture
         ? 'captura obrigatória'
-        : 'captura opcional';
+        : 'primeira captura opcional; sequência obrigatória';
     final directionRule = rules.menCanCaptureBackward
         ? 'peões capturam para frente e para trás'
         : 'peões capturam somente para frente';

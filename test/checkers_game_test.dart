@@ -72,6 +72,24 @@ void main() {
       expect(game.currentPlayer, CheckersPlayer.two);
     });
 
+    test('continua captura múltipla mesmo com a primeira opcional', () {
+      final board = List<CheckersPiece?>.filled(64, null)
+        ..[51] = const CheckersPiece(player: CheckersPlayer.one)
+        ..[42] = const CheckersPiece(player: CheckersPlayer.two)
+        ..[26] = const CheckersPiece(player: CheckersPlayer.two);
+      final game = CheckersGame.custom(
+        board: board,
+        rules: const CheckersRules(mandatoryCapture: false),
+      );
+
+      expect(game.move(51, 33), isTrue);
+      expect(game.currentPlayer, CheckersPlayer.one);
+      expect(game.forcedPiece, 33);
+      expect(game.legalMovesFor(33).map((move) => move.to), contains(19));
+      expect(game.move(33, 19), isTrue);
+      expect(game.currentPlayer, CheckersPlayer.two);
+    });
+
     test('promove uma peça ao chegar na última linha', () {
       final board = List<CheckersPiece?>.filled(64, null)
         ..[9] = const CheckersPiece(player: CheckersPlayer.one)
