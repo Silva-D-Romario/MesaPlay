@@ -32,6 +32,32 @@ void main() {
       expect(game.board[33], isNull);
     });
 
+    test('permite movimento simples quando a captura não é obrigatória', () {
+      final board = List<CheckersPiece?>.filled(64, null)
+        ..[42] = const CheckersPiece(player: CheckersPlayer.one)
+        ..[33] = const CheckersPiece(player: CheckersPlayer.two)
+        ..[46] = const CheckersPiece(player: CheckersPlayer.one);
+      final game = CheckersGame.custom(
+        board: board,
+        rules: const CheckersRules(mandatoryCapture: false),
+      );
+
+      expect(game.legalMovesFor(46), isNotEmpty);
+      expect(game.move(46, 37), isTrue);
+    });
+
+    test('pode bloquear a captura para trás de peças comuns', () {
+      final board = List<CheckersPiece?>.filled(64, null)
+        ..[26] = const CheckersPiece(player: CheckersPlayer.one)
+        ..[35] = const CheckersPiece(player: CheckersPlayer.two);
+      final game = CheckersGame.custom(
+        board: board,
+        rules: const CheckersRules(menCanCaptureBackward: false),
+      );
+
+      expect(game.legalMovesFor(26).any((move) => move.to == 44), isFalse);
+    });
+
     test('mantém o jogador durante captura múltipla', () {
       final board = List<CheckersPiece?>.filled(64, null)
         ..[51] = const CheckersPiece(player: CheckersPlayer.one)
