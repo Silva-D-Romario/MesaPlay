@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mesaplay/features/tic_tac_toe/domain/tic_tac_toe_game.dart';
+import 'package:asobiplay/features/tic_tac_toe/domain/tic_tac_toe_game.dart';
 
 void main() {
   group('TicTacToeGame', () {

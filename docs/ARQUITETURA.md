@@ -15,10 +15,13 @@ lib/
 ├── core/                # Tema, utilitários e componentes compartilhados
 └── features/
     ├── home/            # Catálogo de jogos
-    ├── players/         # Jogadores e placar local
-    ├── tic_tac_toe/     # Motor testado e interface da partida local
+    ├── tic_tac_toe/     # Jogo da Velha: domínio e interface local
+    ├── checkers/        # Damas: regras, temas e interface local
+    ├── hangman/         # Forca: palavra, desenho e interface local
     └── local_network/   # Salas, descoberta e WebSocket na rede local
 ```
+
+Cada jogo possui uma camada `domain`, sem dependência da interface, e uma camada `presentation`. Isso permite testar as regras separadamente e reaproveitá-las no futuro modo Wi-Fi.
 
 ## Multiplayer na rede local
 

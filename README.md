@@ -1,21 +1,22 @@
-# MesaPlay
+# AsobiPlay
 
 Aplicativo mobile de jogos de tabuleiro para jogar no mesmo celular ou com amigos conectados à mesma rede Wi-Fi.
 
-> Projeto em desenvolvimento. A versão atual já permite jogar jogo da velha com dois jogadores no mesmo celular.
+> Projeto em desenvolvimento. A versão atual permite jogar Jogo da Velha, Damas e Forca com dois jogadores no mesmo celular.
 
 ## Recursos disponíveis
 
-- Cadastro rápido do nome de dois jogadores.
-- Motor independente do jogo da velha.
-- Validação de jogadas, vitória e empate.
-- Placar mantido durante a disputa.
-- Revanche alternando o jogador inicial.
+- Cadastro rápido dos nomes dos jogadores em cada jogo.
+- Jogo da Velha com validação de jogadas, vitória, empate e revanche.
+- Damas com capturas obrigatórias, múltiplas capturas, promoção e damas voadoras.
+- Personalização das cores do tabuleiro e das peças de Damas.
+- Forca com palavra secreta protegida, dica opcional e desenho progressivo do boneco.
+- Placar mantido durante as partidas e alternância de papéis nas revanches.
 - Interface responsiva para Android e iOS.
 
 ## Proposta
 
-O MesaPlay reunirá jogos rápidos como jogo da velha, Lig 4, Reversi e damas. Cada jogador poderá informar seu nome, manter um placar local e escolher entre duas formas de partida:
+O AsobiPlay reúne jogos rápidos para jogar com amigos. Cada jogador pode informar seu nome, manter um placar local e escolher entre duas formas de partida:
 
 - **Mesmo celular:** dois jogadores compartilham o aparelho.
 - **Rede Wi-Fi:** um celular cria a sala e funciona como anfitrião temporário, sem depender de computador ou servidor externo.
@@ -47,7 +48,7 @@ flutter test
 
 ## Arquitetura
 
-O código é organizado por funcionalidades. As regras de cada jogo ficarão separadas da interface e da comunicação em rede, permitindo testes isolados e reutilização dos modos de partida.
+O código é organizado por funcionalidades. As regras de cada jogo são separadas da interface e da futura comunicação em rede, permitindo testes isolados e reutilização dos modos de partida.
 
 Consulte a [arquitetura](docs/ARQUITETURA.md) e o [roadmap](docs/ROADMAP.md) para acompanhar as próximas entregas.
 

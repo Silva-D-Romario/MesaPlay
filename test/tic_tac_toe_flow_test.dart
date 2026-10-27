@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mesaplay/app/mesaplay_app.dart';
+import 'package:asobiplay/app/asobiplay_app.dart';
 
 void main() {
   testWidgets('cadastra jogadores, conclui rodada e mantém o placar', (
     tester,
   ) async {
-    await tester.pumpWidget(const MesaPlayApp());
+    await tester.pumpWidget(const AsobiPlayApp());
 
     await tester.tap(find.text('Mesmo celular'));
     await tester.pumpAndSettle();
@@ -40,7 +40,7 @@ void main() {
   });
 
   testWidgets('valida nomes obrigatórios antes de iniciar', (tester) async {
-    await tester.pumpWidget(const MesaPlayApp());
+    await tester.pumpWidget(const AsobiPlayApp());
     await tester.tap(find.text('Mesmo celular'));
     await tester.pumpAndSettle();
 
