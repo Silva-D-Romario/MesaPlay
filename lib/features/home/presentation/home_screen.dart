@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_theme.dart';
+import '../../checkers/presentation/checkers_setup_screen.dart';
+import '../../hangman/presentation/hangman_setup_screen.dart';
 import '../../tic_tac_toe/presentation/tic_tac_toe_setup_screen.dart';
 import '../domain/game_preview.dart';
 import 'widgets/game_card.dart';
@@ -10,25 +12,36 @@ class HomeScreen extends StatelessWidget {
 
   static const games = [
     GamePreview(
+      kind: GameKind.ticTacToe,
       name: 'Jogo da Velha',
       description: 'Partidas rápidas para dois jogadores.',
       icon: Icons.grid_3x3_rounded,
       accent: AppColors.primary,
-      status: 'PRÓXIMO',
+      status: 'JOGAR',
     ),
     GamePreview(
+      kind: GameKind.checkers,
+      name: 'Damas',
+      description: 'Capture, promova e domine o tabuleiro.',
+      icon: Icons.grid_on_rounded,
+      accent: AppColors.secondary,
+      status: 'JOGAR',
+    ),
+    GamePreview(
+      kind: GameKind.hangman,
+      name: 'Forca',
+      description: 'Escolha a palavra e desafie um amigo.',
+      icon: Icons.psychology_alt_rounded,
+      accent: AppColors.cyan,
+      status: 'JOGAR',
+    ),
+    GamePreview(
+      kind: GameKind.connectFour,
       name: 'Lig 4',
       description: 'Estratégia simples, disputa intensa.',
       icon: Icons.view_column_rounded,
       accent: AppColors.coral,
       status: 'EM BREVE',
-    ),
-    GamePreview(
-      name: 'Damas',
-      description: 'O clássico de tabuleiro entre amigos.',
-      icon: Icons.circle_outlined,
-      accent: AppColors.secondary,
-      status: 'PLANEJADO',
     ),
   ];
 
@@ -67,9 +80,7 @@ class HomeScreen extends StatelessWidget {
                         separatorBuilder: (_, _) => const SizedBox(width: 14),
                         itemBuilder: (context, index) => GameCard(
                           game: games[index],
-                          onTap: () => index == 0
-                              ? _openTicTacToe(context)
-                              : _showComingSoon(context, games[index].name),
+                          onTap: () => _openGame(context, games[index]),
                         ),
                       ),
                     ),
@@ -85,10 +96,18 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  static void _openTicTacToe(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(builder: (_) => const TicTacToeSetupScreen()),
-    );
+  static void _openGame(BuildContext context, GamePreview game) {
+    final Widget? screen = switch (game.kind) {
+      GameKind.ticTacToe => const TicTacToeSetupScreen(),
+      GameKind.checkers => const CheckersSetupScreen(),
+      GameKind.hangman => const HangmanSetupScreen(),
+      GameKind.connectFour => null,
+    };
+    if (screen == null) {
+      _showComingSoon(context, game.name);
+      return;
+    }
+    Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => screen));
   }
 
   static void _showComingSoon(BuildContext context, String game) {
@@ -116,7 +135,7 @@ class _TopBar extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
           ),
           child: const Text(
-            'MP',
+            'AP',
             style: TextStyle(
               color: AppColors.background,
               fontWeight: FontWeight.w900,
@@ -212,7 +231,7 @@ class _LocalButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: FilledButton.icon(
-        onPressed: () => HomeScreen._openTicTacToe(context),
+        onPressed: () => HomeScreen._openGame(context, HomeScreen.games.first),
         icon: const Icon(Icons.smartphone_rounded),
         label: const Text('Mesmo celular'),
       ),
