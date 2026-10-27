@@ -224,7 +224,7 @@ class _TopBar extends StatelessWidget {
                   fontWeight: FontWeight.w900,
                 ),
               ),
-              Text('Mesmo celular · seis tentativas'),
+              Text('Mesmo celular · sete tentativas'),
             ],
           ),
         ),
@@ -648,7 +648,7 @@ class HangmanPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
     final bodyPaint = Paint()
-      ..color = errors >= 6 ? AppColors.coral : AppColors.cyan
+      ..color = errors >= 7 ? AppColors.coral : AppColors.cyan
       ..strokeWidth = 5
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
@@ -674,11 +674,10 @@ class HangmanPainter extends CustomPainter {
     );
 
     if (errors >= 1) {
-      canvas.drawCircle(
-        Offset(hookX, size.height * 0.31),
-        size.height * 0.09,
-        bodyPaint,
-      );
+      final headCenter = errors >= 7
+          ? Offset(hookX + size.width * 0.08, size.height * 0.37)
+          : Offset(hookX, size.height * 0.31);
+      canvas.drawCircle(headCenter, size.height * 0.09, bodyPaint);
     }
     if (errors >= 2) {
       canvas.drawLine(
@@ -713,6 +712,22 @@ class HangmanPainter extends CustomPainter {
         Offset(hookX, size.height * 0.65),
         Offset(hookX + size.width * 0.1, size.height * 0.82),
         bodyPaint,
+      );
+    }
+    if (errors >= 7) {
+      final finishPaint = Paint()
+        ..color = AppColors.primary
+        ..strokeWidth = 3
+        ..strokeCap = StrokeCap.round;
+      canvas.drawLine(
+        Offset(hookX - size.width * 0.035, size.height * 0.39),
+        Offset(hookX + size.width * 0.01, size.height * 0.42),
+        finishPaint,
+      );
+      canvas.drawLine(
+        Offset(hookX - size.width * 0.01, size.height * 0.38),
+        Offset(hookX + size.width * 0.035, size.height * 0.41),
+        finishPaint,
       );
     }
   }
