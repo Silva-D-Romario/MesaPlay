@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'app/mesaplay_app.dart';
+import 'app/asobiplay_app.dart';
 
 void main() {
-  runApp(const MesaPlayApp());
+  runApp(const AsobiPlayApp());
 }

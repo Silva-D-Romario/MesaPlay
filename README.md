@@ -1,4 +1,4 @@
-# MesaPlay
+# AsobiPlay
 
 Aplicativo mobile de jogos de tabuleiro para jogar no mesmo celular ou com amigos conectados à mesma rede Wi-Fi.
 
@@ -15,7 +15,7 @@ Aplicativo mobile de jogos de tabuleiro para jogar no mesmo celular ou com amigo
 
 ## Proposta
 
-O MesaPlay reunirá jogos rápidos como jogo da velha, Lig 4, Reversi e damas. Cada jogador poderá informar seu nome, manter um placar local e escolher entre duas formas de partida:
+O AsobiPlay reúne jogos rápidos para jogar com amigos. Cada jogador pode informar seu nome, manter um placar local e escolher entre duas formas de partida:
 
 - **Mesmo celular:** dois jogadores compartilham o aparelho.
 - **Rede Wi-Fi:** um celular cria a sala e funciona como anfitrião temporário, sem depender de computador ou servidor externo.

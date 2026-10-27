@@ -1,4 +1,4 @@
-package br.com.romariosilva.mesaplay
+package br.com.romariosilva.asobiplay
 
 import io.flutter.embedding.android.FlutterActivity
 

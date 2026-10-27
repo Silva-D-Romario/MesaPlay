@@ -125,7 +125,7 @@ class _TopBar extends StatelessWidget {
         ),
         const SizedBox(width: 12),
         const Text(
-          'MesaPlay',
+          'AsobiPlay',
           style: TextStyle(
             color: AppColors.textPrimary,
             fontSize: 21,
