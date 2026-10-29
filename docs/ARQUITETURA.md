@@ -19,7 +19,7 @@ lib/
     ├── checkers/        # Damas: regras, temas e interface local
     ├── hangman/         # Forca: palavra, desenho e interface local
     ├── connect_four/    # Lig 4: motor, gravidade e interface local
-    └── local_network/   # Salas, descoberta e WebSocket na rede local
+    └── local_network/   # Estado autoritativo, UDP, WebSocket e telas Wi-Fi
 ```
 
 Cada jogo possui uma camada `domain`, sem dependência da interface, e uma camada `presentation`. Isso permite testar as regras separadamente e reaproveitá-las no futuro modo Wi-Fi.
@@ -35,6 +35,10 @@ Celular anfitrião ── WebSocket na rede Wi-Fi ── Celular convidado
 ```
 
 O servidor existe apenas dentro do aplicativo durante a partida. Não depende do computador do desenvolvedor nem de hospedagem externa.
+
+Na implementação atual, o anfitrião abre um `HttpServer` com WebSocket em uma porta dinâmica. O código de seis números é anunciado por UDP broadcast. Todas as jogadas do convidado passam pelo anfitrião, que valida turno, casa livre, vitória, empate e revanche antes de transmitir o novo estado.
+
+Se o roteador bloquear broadcast, o convidado pode usar o endereço `IP:porta` exibido na tela do anfitrião.
 
 ## Evolução futura
 
