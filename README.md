@@ -12,6 +12,8 @@ Aplicativo mobile de jogos de tabuleiro para jogar no mesmo celular ou com amigo
 - Cinco cores individuais para as peças de cada jogador e três temas de tabuleiro.
 - Forca com palavra secreta protegida, dica opcional e sete estágios no desenho.
 - Lig 4 com gravidade, sequências horizontais, verticais e diagonais.
+- Jogo da Velha multiplayer entre dois celulares na mesma rede Wi-Fi.
+- Criação de sala por código, descoberta automática e entrada manual por IP.
 - Placar mantido durante as partidas e alternância de papéis nas revanches.
 - Interface responsiva para Android e iOS.
 - Identidade visual própria e ícones para Android e iOS.
@@ -21,13 +23,20 @@ Aplicativo mobile de jogos de tabuleiro para jogar no mesmo celular ou com amigo
 O AsobiPlay reúne jogos rápidos para jogar com amigos. Cada jogador pode informar seu nome, manter um placar local e escolher entre duas formas de partida:
 
 - **Mesmo celular:** dois jogadores compartilham o aparelho.
-- **Rede Wi-Fi:** um celular cria a sala e funciona como anfitrião temporário, sem depender de computador ou servidor externo.
+- **Rede Wi-Fi:** no Jogo da Velha, um celular cria a sala e funciona como anfitrião temporário, sem depender de computador ou servidor externo.
+
+Para jogar pela rede local:
+
+1. Conecte os dois celulares ao mesmo Wi-Fi.
+2. No primeiro aparelho, toque em **Sala Wi-Fi**, informe o nome e crie a sala.
+3. No segundo, informe nome e código para localizar a sala automaticamente.
+4. Se a descoberta não funcionar, digite o `IP:porta` mostrado pelo anfitrião.
 
 ## Tecnologias
 
 - Flutter e Dart
 - Material 3
-- WebSocket e descoberta na rede local nas próximas etapas
+- WebSocket, UDP broadcast e descoberta na rede local
 - Testes unitários e de widgets
 - GitHub Actions
 

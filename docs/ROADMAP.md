@@ -20,12 +20,17 @@
 - Forca com palavra secreta, dica opcional, sétima tentativa e desenho progressivo.
 - Nomes, placar e revanches para os dois jogos.
 
-## Etapa 4 — Salas na rede Wi-Fi
+## Etapa 4 — Jogo da Velha na rede Wi-Fi ✅
 
 - Um celular atua como anfitrião temporário.
 - Comunicação por WebSocket.
 - Entrada por código e descoberta na rede local.
 - Reconexão e validação das jogadas pelo anfitrião.
+
+### Próxima evolução da rede
+
+- Reutilizar as salas Wi-Fi em Damas e Lig 4.
+- Adicionar QR Code como alternativa ao código numérico.
 
 ## Etapa 5 — Lig 4 ✅
 

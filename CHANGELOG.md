@@ -1,5 +1,12 @@
 # Histórico de versões
 
+## v0.5.0 — 29/10/2026
+
+- Adiciona salas Wi-Fi para Jogo da Velha sem servidor externo.
+- Implementa anfitrião temporário, WebSocket e validação autoritativa.
+- Permite encontrar a sala pelo código ou conectar manualmente por IP e porta.
+- Adiciona sincronização de nomes, jogadas, placar e revanches.
+
 ## v0.4.1 — 27/10/2026
 
 - Corrige a captura múltipla quando a primeira captura é opcional em Damas.
