@@ -4,6 +4,7 @@ import '../../../core/theme/app_theme.dart';
 import '../../checkers/presentation/checkers_setup_screen.dart';
 import '../../connect_four/presentation/connect_four_setup_screen.dart';
 import '../../hangman/presentation/hangman_setup_screen.dart';
+import '../../local_network/presentation/wifi_lobby_screen.dart';
 import '../../tic_tac_toe/presentation/tic_tac_toe_setup_screen.dart';
 import '../domain/game_preview.dart';
 import 'widgets/game_card.dart';
@@ -232,7 +233,9 @@ class _LanButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: OutlinedButton.icon(
-        onPressed: () {},
+        onPressed: () => Navigator.of(context).push(
+          MaterialPageRoute<void>(builder: (_) => const WifiLobbyScreen()),
+        ),
         icon: const Icon(Icons.wifi_tethering_rounded),
         label: const Text('Sala Wi-Fi'),
         style: OutlinedButton.styleFrom(
